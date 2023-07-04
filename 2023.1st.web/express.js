@@ -1,17 +1,20 @@
-const express = require('express');
+const express = require('express'); 
+// express라는 웹 애플리케이 프레임 워크를 호출했다.
 const app = express();
 const fs = require('fs');
 const bodyParser = require('body-parser');
-const path = require('path');
+// 클라이언트의 HTTP 요청에서 데이터를 추출하여 파싱하는 역할을 담당하는 데 요청 body에 포함된 JSON의 데이터를 파싱하여 JavaScript객체로 변환해서 Javascript에서 
+// 그 객체를 서버에서 사용할 수 있게 만든 것.
+const path = require('path'); // 파일 경로와 관련된 작업을 수행하는 함수들을 제공한다.
 
-// 필요한 모듈 호출
+// 위에는 필요한 모듈 호출한 부분.
 
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(bodyParser.json()); //
 
 //파일을 json으로 받기 위함인가?
 
-// 정적 파일 서비스 설정
+// 정적 파일 서비스 설정 ( 정적 파일 = CSS나 HTML 같은 파일을 적용하기 위함)
 app.use('/', express.static(__dirname + '/mainview')); // CSS 파일이 있는 디렉토리
 app.use('/writeview', express.static(__dirname + '/writeview'));
 app.use('/subview', express.static(__dirname + '/subview'));
@@ -20,7 +23,7 @@ app.use('/update', express.static(__dirname + '/subview'));
 
 // 앞에 인자의 홈페이지에 들어왔을 때 뒤에 파일안에 있는 css를 쓰기 위해서 호출한 것. __dirname은 현재 js 위치에요.
 
-// 라우팅 및 서버 실행
+// 라우팅 및 서버 실행 (__dirname = 현재 실행중인 파일의 디렉토리 경로를 의미)
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
@@ -39,18 +42,20 @@ app.get('/test2-2.html', (req, res) => {
 
 // 아래 부분은 글쓰기 창에서 upload누르면 자동으로 이게 실행되서 파일 만들고 다른 화면으로 보내는 부분
 app.post('/create_process/', (req, res) => {
-  const postData = req.body;
+  const postData = req.body; // 위에서 const bodyParser = require('body-parser'); 이 부분을 사용한 것.
 
+  // 이 부분은 글을 쓸 때 자동으로 쓴 날짜가 적용되게 하는 함수이다.
   var today = new Date();
    var year = today.getFullYear();
    var month = today.getMonth() + 1; // 월은 0부터 시작하므로 1을 더해줍니다.
    var day = today.getDate();
    var formattedDate = year + '-' + (month < 10 ? '0' : '') + month + '-' + (day < 10 ? '0' : '') + day;
 
-postData.date = formattedDate; 
+postData.date = formattedDate; // <- txt파일에 날짜도 저장한 것. 
   const fileName = postData.title + ".json"; // 파일 제목에 확장자 추가
-  const filefield = postData.field;
-  const filePath = path.join(__dirname, filefield, 'file', fileName); // 경로 구성
+  const filefield = postData.field;  // 백앤드와 프론트앤드, 커뮤니티 3가지 폴더로 나눠 저장하기 위한 장치.
+  const filePath = path.join(__dirname, filefield, 'file', fileName); // 경로 구성 
+  
   // 폼 데이터를 파일로 저장하는 로직
   fs.writeFile(filePath, JSON.stringify(postData), 'utf-8', (err) => {
     if (err) {
