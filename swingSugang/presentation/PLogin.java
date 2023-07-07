@@ -1,47 +1,117 @@
 package presentation;
 
 import java.awt.Color;
-import java.util.Scanner;
+import java.awt.Font;
 
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 
 import control.CLogin;
 import valueObject.VLogin;
 import valueObject.VUserInfo;
 
 public class PLogin extends JPanel {
-	
+	private JButton loginBtn;
+	private JTextField idF;
+	private JPasswordField passwordF;
 	public PLogin() {
-		this.setBackground(Color.green);
+		
+		this.setBackground(Color.white);
+		this.setLayout(null); // ì´ë ‡ê²Œ nullë¥¼ ë¶™ì—¬ì¤˜ì•¼ setBoundsê°€ ë“¤ì–´ê¸°ë„¤
+		JLabel title = new JLabel("ëª…ì§€ëŒ€ ìˆ˜ê°•ì‹ ì²­");
+		int frameSize = 400; // ì»¨í…Œì´ë„ˆ í¬ê¸° ê°€ì ¸ì˜¤ê¸°
+		title.setSize(200,50);
+		
+		int titleSize = title.getWidth();
+		int x = (frameSize - titleSize)/2;
+		
+		title.setLocation(x, title.getHeight());
+		
+		Font font = title.getFont();
+		title.setFont(font.deriveFont(24.0f)); // deriverFontëŠ” floatê°’ì„ ê¸°ëŒ€í•˜ê¸° ë•Œë¬¸ì— fë¥¼ ë¶™ì—¬ì•¼ í•œë‹¤.
+		this.add(title);
+		
+		loginBtn = new JButton("ë¡œê·¸ì¸");
+		loginBtn.setSize(100, 100);
+		loginBtn.setLocation((frameSize-loginBtn.getWidth())/2,300);
+		this.add(loginBtn);
+		
+		JLabel id = new JLabel("í•™ë²ˆ");
+		id.setFont(font.deriveFont(20f));
+		id.setBounds(100, 100, 100, 150);
+		add(id);
+		
+		idF = new JTextField(10);
+		idF.setSize(100, 50);
+		idF.setLocation(200,150);
+		add(idF);
+
+		JLabel password = new JLabel("ë¹„ë°€ë²ˆí˜¸");
+		password.setFont(font.deriveFont(20f));
+		password.setBounds(80, 180, 100, 150);
+		add(password);
+		passwordF = new JPasswordField(10);
+		passwordF.setSize(100, 50);
+		passwordF.setLocation(200,230);
+		add(passwordF);
+		
 	}
 
-	public VUserInfo login(Scanner keyboard){
+//	public VUserInfo login(Scanner keyboard){
+//		
+//		System.out.println("ì‚¬ìš©ì ì•„ì´ë”” ì…ë ¥í•˜ì„¸ìš”.");
+//		 // ì´ê±´ ë³€í™˜ì‹œì¼œì£¼ëŠ” ì• . í‚¤ë³´ë“œë‘ ì—°ê²°í•´ì•¼ë  êº¼ ì•„ë‹ˆì•¼ í‚¤ë³´ë“œê°€ System.inì´ì•¼. ì´ë ‡ê²Œ í•´ì•¼ ë‚˜ì˜ í‚¤ë³´ë“œë§Œ ë…ë¦½ì ìœ¼ë¡œ ì“¸ ìˆ˜ ìˆë‹¤.
+//		String userId = keyboard.next();
+//		System.out.println(userId);
+//		System.out.println("ë¹„ë°€ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”.");
+//		String password = keyboard.next();
+//		System.out.println(password);
+//		
+//		
+//		VLogin vLogin = new VLogin();
+//		vLogin.setUserId(userId);
+//		vLogin.setPassword(password);
+//		// ê·¸ë¦‡ì— ë‹´ì•˜ë‹¤.
+//		CLogin cLgoin = new CLogin();
+//		
+//		VUserInfo vUserInfo = cLgoin.login(vLogin); // accountí•œí…Œ ìœ ì € infoì„ ë°›ì•„ì™€ì•¼í•œë‹¤.
+//		
+//		if(vUserInfo ==null) {
+//			System.out.println("ì˜ëª» ì…ë ¥í•˜ì…¨ìŠµë‹ˆë‹¤.");
+//		}
+//		else {
+//			System.out.println(vUserInfo.getName()+"ë‹˜ ì•ˆë…•í•˜ì„¸ìš”.");
+//		}
+//		
+//		
+//		return vUserInfo;
+//	}
+
+	public JButton getButtone() {
+		return loginBtn;
 		
-		System.out.println("»ç¿ëÀÚ ¾ÆÀÌµğ ÀÔ·ÂÇÏ¼¼¿ä.");
-		 // ÀÌ°Ç º¯È¯½ÃÄÑÁÖ´Â ¾Ö. Å°º¸µå¶û ¿¬°áÇØ¾ßµÉ ²¨ ¾Æ´Ï¾ß Å°º¸µå°¡ System.inÀÌ¾ß. ÀÌ·¸°Ô ÇØ¾ß ³ªÀÇ Å°º¸µå¸¸ µ¶¸³ÀûÀ¸·Î ¾µ ¼ö ÀÖ´Ù.
-		String userId = keyboard.next();
-		System.out.println(userId);
-		System.out.println("ºñ¹Ğ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä.");
-		String password = keyboard.next();
-		System.out.println(password);
-		
-		
+	}
+
+	public VUserInfo login() {
 		VLogin vLogin = new VLogin();
-		vLogin.setUserId(userId);
-		vLogin.setPassword(password);
-		// ±×¸©¿¡ ´ã¾Ò´Ù.
-		CLogin cLgoin = new CLogin();
-		
-		VUserInfo vUserInfo = cLgoin.login(vLogin); // accountÇÑÅ× À¯Àú infoÀ» ¹Ş¾Æ¿Í¾ßÇÑ´Ù.
-		
+		vLogin.setUserId(idF.getText());
+		char[] password = passwordF.getPassword();
+		String pw = new String(password);
+		vLogin.setPassword(pw);
+		CLogin cLgoin = new CLogin();		
+		VUserInfo vUserInfo = cLgoin.login(vLogin); 
 		if(vUserInfo ==null) {
-			System.out.println("Àß¸ø ÀÔ·ÂÇÏ¼Ì½À´Ï´Ù.");
+			JOptionPane.showMessageDialog(null, "ì˜¬ë°”ë¥¸ ì •ë³´ê°€ ì•„ë‹™ë‹ˆë‹¤.");
 		}
 		else {
-			System.out.println(vUserInfo.getName()+"´Ô ¾È³çÇÏ¼¼¿ä.");
+			JOptionPane.showMessageDialog(null, vUserInfo.getName()+"ë‹˜ ì•ˆë…•í•˜ì„¸ìš”.");
+			this.setVisible(false);
 		}
-		
-		
 		return vUserInfo;
+		
 	}
 }
